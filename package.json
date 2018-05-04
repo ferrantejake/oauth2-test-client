@@ -1,6 +1,6 @@
 {
-  "name": "ts-node-api-shell",
-  "debug": "api-shell:*",
+  "name": "ts-node-oauth-test-client",
+  "debug": "oauth-test-client:*",
   "description": "A shell project for common nodejs + typescript standalone back-end applications.",
   "main": "index.js",
   "version": "0.0.0",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ferrantejake/ts-node-api-shell.git"
+    "url": "git+ssh://git@github.com:ferrantejake/oauth2-test-client.git"
   },
   "keywords": [
     "ts",
@@ -21,13 +21,15 @@
   "author": "Jake Ferrante",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ferrantejake/ts-node-api-shell/issues"
+    "url": "https://github.com/ferrantejake/oauth2-test-client/issues"
   },
-  "homepage": "https://github.com/ferrantejake/ts-node-api-shell#readme",
+  "homepage": "https://github.com/ferrantejake/oauth2-test-client#readme",
   "dependencies": {
     "@types/express": "^4.0.39",
     "@types/express-serve-static-core": "^4.0.57",
     "@types/node": "^8.0.55",
+    "@types/passport": "^0.4.5",
+    "@types/passport-oauth2": "^1.4.4",
     "async": "^2.6.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
@@ -49,6 +51,8 @@
     "jade": "~1.11.0",
     "merge2": "^1.0.3",
     "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-oauth2": "^1.4.0",
     "path": "^0.12.7",
     "serve-favicon": "~2.4.5",
     "tslint": "^5.2.0",

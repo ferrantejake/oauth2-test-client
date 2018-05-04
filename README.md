@@ -1,4 +1,4 @@
-# ts-node-api-shell
+# ts-node-oauth-test-client
 A shell project for nodejs + typescript web api applications.
 
 ## Features

@@ -3,8 +3,12 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  p 
+    ul
+      li current process details:
+      li auth endpoint: #{auth_endpoint}
+      li token endpoint: #{token_endpoint}
+      li client_id: #{client_id} 
+      li client_secret: #{client_secret}  
   p
-    | try navigating to 
-    | <a href="http://localhost:4000/welcome">welcome</a>
-    | or
-    | <a href="http://localhost:4000/teapot">teapot</a>
+    a(href="http://localhost:#{port}/auth") start the auth process

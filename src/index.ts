@@ -1,7 +1,10 @@
 import * as express from 'express';
 import * as path from 'path';
 import { localconfig } from './utils';
+import { passport } from './components';
+
 localconfig.setup();
+passport.init();
 
 const cors = require('cors');
 const logger = require('morgan');
