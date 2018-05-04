@@ -1,6 +1,11 @@
 {
     "process.env": {
         "DEBUG": "oauth-test-client:*",
-        "ENVIRONMENT": "development"
+        "ENVIRONMENT": "development",
+        "AUTHORIZATION_ENDPOINT": "",
+        "TOKEN_ENDPOINT": "",
+        "CLIENT_ID": "",
+        "CLIENT_SECRET": "",
+        "PORT": ""
     }
 }
