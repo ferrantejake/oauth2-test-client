@@ -5,6 +5,7 @@ module.exports = router;
 
 // Routes
 router.get('/', index);
+router.get('/callback', callback);
 router.get('/error', error);
 
 router.get('/auth',
@@ -20,23 +21,29 @@ router.get('/auth/callback',
 // Route definitions
 function index(req: express.Request, res: express.Response, next: express.NextFunction): void {
   const {
-    YO_AUTHORIZATION_ENDPOINT,
-    YO_TOKEN_ENDPOINT,
+    AUTHORIZATION_ENDPOINT,
+    TOKEN_ENDPOINT,
     CLIENT_ID,
     CLIENT_SECRET,
     PORT
   } = process.env;
 
   res.render('index', {
-    auth_endpoint: YO_AUTHORIZATION_ENDPOINT,
-    token_endpoint: YO_TOKEN_ENDPOINT,
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
-    port: PORT,
-    title: 'Node JS API App'
+    pagename: 'index',
+
+    // optional parts for persistent storage
+    // auth_endpoint: AUTHORIZATION_ENDPOINT,
+    // token_endpoint: TOKEN_ENDPOINT,
+    // client_id: CLIENT_ID,
+    // client_secret: CLIENT_SECRET,
+    // port: PORT,
+    // title: 'Oauth2 Client',
   });
 }
 
+function callback(req: express.Request, res: express.Response, next: express.NextFunction): void {
+  res.render('callback', { pagename: 'callback' });
+}
 function error(req: express.Request, res: express.Response, next: express.NextFunction): void {
   res.send({ error: ':c' });
 }

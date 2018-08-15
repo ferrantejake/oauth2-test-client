@@ -4,10 +4,8 @@ const router: Router = Router();
 
 const version = 'v0';
 
-const home = require(`../services/${version}/home`);
-const users = require(`../services/${version}/users`);
+const home = require(`../services/${version}/index`);
 
 router.use('/', home);
-router.use('/users', users);
 
 module.exports = router;

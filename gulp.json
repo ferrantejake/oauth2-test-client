@@ -13,6 +13,9 @@
     "tsfilesmap": {
         "src/**/*.ts": "lib"
     },
-    "resources": "src/**/*.!(ts)",
+    "resources": [
+        "src/**/*.*",
+        "!src/**/*.ts"
+    ],
     "inlineSourcemaps": true
 }

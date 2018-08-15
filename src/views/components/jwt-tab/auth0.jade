@@ -1,0 +1,40 @@
+#auth0.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='auth0-tab')
+  h5 1. Retrieve JWT tokens
+  .row
+    .container
+      .col
+        .form-group.row
+          label(for='id_token').col-4.text-right id token
+          .col
+            textarea(v-model='config.id_token', name='id_token').form-control
+        .form-group.row
+          label(for='access_token').col-4.text-right access token
+          .col
+            textarea(v-model='config.access_token', name='access_token').form-control
+  .row
+    .container
+      p
+        button(@click='clearConfig' type='button').btn.btn-secondary Clear Configuration 
+      p
+        button(@click='retrieveTokens' type='button').btn.btn-warning Retrieve JWT tokens
+  h5 2. Validate ID Token
+  p Tokens will populate below
+  .row
+    .container
+      .col
+        .form-group.row
+          label(for='jwt_validation_endpoint').col-4.text-right JWT verification endpoint
+          .col 
+            input(v-model='config.jwt_validation_endpoint', name='jwt_validation_endpoint', placeholder='http://dev-ioe.droplit.io/api/ecosystems/:id/conduits/:conduitName/verify-jwt').form-control
+        .form-group.row
+          label(for='id_token').col-4.text-right id token
+          textarea(v-model='config.id_token', name='id_token').col
+        .form-group.row
+          label(for='access_token').col-4.text-right access token
+          textarea(v-model='config.access_token', name='access_token').col
+  .row
+    .container
+      p
+        button(@click='clearTokens' type='button').btn.btn-secondary Clear Tokens
+      p
+        button(@click='validateWithDroplit' type='button').btn.btn-success Validate ID Token with Droplit

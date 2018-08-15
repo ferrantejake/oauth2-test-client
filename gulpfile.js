@@ -137,11 +137,19 @@ function buildTask(callback) {
   G$.sequence(['tslint', 'clean'], 'typescript', callback);
 };
 
+gulp.task('pipe-resources', 'Contiuous updates', [], pipeResources);
+function pipeResources(callback) {
+  return gulp.src(settings.resources)
+    .pipe(gulp.dest(settings.dest));
+}
+
 // Watching
 gulp.task('watch', 'Contiuous build', ['build'], watchTask);
 function watchTask(callback) {
-  gulp.watch(settings.tsfiles, ['tslint', `typescript`]);
+  gulp.watch(settings.resources, ['pipe-resources']);
+  gulp.watch(settings.tsfiles, ['tslint', 'typescript']);
 }
+
 
 // Cleaning
 gulp.task('clean', 'Cleans the generated files from lib directory', cleanTask);
