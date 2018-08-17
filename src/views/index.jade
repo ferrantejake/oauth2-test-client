@@ -12,59 +12,68 @@ block content
       p A collection of commonly-used OAuth2 processes simplified into a single web page.
       a(href='#') Click me for more info
     
-    .section#oauth2Client
-      .row
-        .container
-          h4 Server-server (API) OAuth2 Authentication
-          p Communicate with an OAuth2 server to gain access to an API.
-      .row
-        .container
-          .col
-            .form-group.row
-              label(for='client_id').col-4.text-right client id
-              .col
-                input(v-model='config.client_id', name='client_id').form-control
-            .form-group.row
-              label(for='client_secret').col-4.text-right client secret
-              .col
-                input(v-model='config.client_secret', name='client_secret').form-control
-            .form-group.row
+    //- .section#oauth2Client
+    //-   .row
+    //-     .container
+    //-       h4 Server-server (API) OAuth2 Authentication
+    //-       p Communicate with an OAuth2 server to gain access to an API.
+    //-   .row
+    //-     .container
+    //-       .col
+    //-         .form-group.row
+    //-           label(for='client_id').col-4.text-right client id
+    //-           .col
+    //-             input(v-model='config.client_id', name='client_id').form-control
+    //-         .form-group.row
+    //-           label(for='client_secret').col-4.text-right client secret
+    //-           .col
+    //-             input(v-model='config.client_secret', name='client_secret').form-control
+    //-         .form-group.row
 
-            .form-group.row
-              label(for='auth_endpoint').col-4.text-right authentication endpoint
-              .col 
-                input(v-model='config.auth_endpoint', name='auth_endpoint' placeholder='https://serviceprovider.com/oauth2/authenticate').form-control
-            //- .form-group.row
-            //-   label(for='token_endpoint').col-4.text-right token endpoint
-            //-   .col
-            //-     input(v-model='config.token_endpoint', name='token_endpoint' placeholder='https://serviceprovider.com/oauth2/token').form-control
-            .form-group.row
-              label(for='callback_endpoint').col-4.text-right callback endpoint
-              .col
-                span(name='callback_endpoint') {{ config.callback_endpoint }}
-                //- input(v-model='config.callback_endpoint', name='callback_endpoint', placeholder='https://localhost:3000/oauth2/callback').form-control
-      .row
-        .container
-          p
-            button(@click='clearConfig' type='button').btn.btn-secondary Clear Configuration
-          p
-            button(@click='startAuth' type='button').btn.btn-warning Initiate Authentication Process
-          //- h5 1.1 Returned Tokens
-          //- .col-8 
-          //-   .form-group.row
-          //-     label(for='id_token').col-4.text-right id token
-          //-     p(v-model='config.id_token', name='id_token' disabled='disabled').col
-          //-   .form-group.row
-          //-     label(for='access_token').col-4.text-right access token
-          //-     p(v-model='config.access_token', name='access_token' type='display').col
+    //-         .form-group.row
+    //-           label(for='auth_endpoint').col-4.text-right authentication endpoint
+    //-           .col 
+    //-             input(v-model='config.auth_endpoint', name='auth_endpoint' placeholder='https://serviceprovider.com/oauth2/authenticate').form-control
+    //-         //- .form-group.row
+    //-         //-   label(for='token_endpoint').col-4.text-right token endpoint
+    //-         //-   .col
+    //-         //-     input(v-model='config.token_endpoint', name='token_endpoint' placeholder='https://serviceprovider.com/oauth2/token').form-control
+    //-         .form-group.row
+    //-           label(for='callback_endpoint').col-4.text-right callback endpoint
+    //-           .col
+    //-             span(name='callback_endpoint') {{ config.callback_endpoint }}
+    //-             //- input(v-model='config.callback_endpoint', name='callback_endpoint', placeholder='https://localhost:3000/oauth2/callback').form-control
+    //-   .row
+    //-     .container
+    //-       p
+    //-         button(@click='clearConfig' type='button').btn.btn-secondary Clear Configuration
+    //-       p
+    //-         button(@click='startAuth' type='button').btn.btn-warning Initiate Authentication Process
+    //-       //- h5 1.1 Returned Tokens
+    //-       //- .col-8 
+    //-       //-   .form-group.row
+    //-       //-     label(for='id_token').col-4.text-right id token
+    //-       //-     p(v-model='config.id_token', name='id_token' disabled='disabled').col
+    //-       //-   .form-group.row
+    //-       //-     label(for='access_token').col-4.text-right access token
+    //-       //-     p(v-model='config.access_token', name='access_token' type='display').col
 
-    h4 Client-server JWT 
-    p 
-      | Start here. Enter your Oauth2 client credentials and start the authentication
-      | process. Fields in [2] will populate upon completion.
+    //- h4 Client-server JWT 
+    //- p 
+    //-   | Start here. Enter your Oauth2 client credentials and start the authentication
+    //-   | process. Fields in [2] will populate upon completion.
 
     .section
+      .row
+        .container
+          h4 Client-server JWT 
+          p 
+            | Start here. Enter your Oauth2 client credentials and start the authentication
+            | process. Fields in [2] will populate upon completion.
+
       include ./components/tabs
+      //- include ./components/
+
 
     .section
       h5 Other useful resources

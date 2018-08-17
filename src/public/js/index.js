@@ -10,10 +10,14 @@ let oauthClient, jwtClient, scopeComponent;
 //     input(v-model='config.scopes', name='scopes').col"
 // })
 
+const { pathname, host, protocol } = window.location;
+const callback_endpoint = protocol + '//' + host + pathname + 'callback'
+
+
 oauthClient = new Vue({
     el: "#oauth2Client",
     data: {
-        config: {}
+        config: {},
     },
     created: function () {
         let client_id = localStorage.getItem('client_id');
@@ -33,15 +37,15 @@ oauthClient = new Vue({
     },
     methods: {
         clearConfig: function () {
-            this.config = {};
+            this.config = {
+                callback_endpoint
+            };
             localStorage.removeItem('client_id');
             localStorage.removeItem('client_secret');
             localStorage.removeItem('auth_endpoint');
             localStorage.removeItem('token_endpoint');
         },
         startAuth: function () {
-
-
             try {
                 const query = Object.keys(this.config).reduce(function (acc, key) {
                     const val = this.config[key];
@@ -49,13 +53,13 @@ oauthClient = new Vue({
                         throw new Error('missing value for', val)
                     return acc += '?' + key + '=' + val;
 
+                    windows.location
+
                 }, '?')
             } catch (e) {
                 console.log(e);
                 return;
             }
-
-
         }
     },
     updateConfigItem: function (x, y) {
@@ -64,8 +68,27 @@ oauthClient = new Vue({
     }
 })
 
-auth0Client = new Vue({
+jwtClient = new Vue({
     el: "#jwtClient",
+    data: {
+        config: {}
+    },
+    mounted: function () {
+        // named items
+    },
+    created: function () { },
+    methods: {
+        validateWithDroplit: function () {
+
+        },
+        clearConfig: function () {
+            this.config = {};
+        }
+    }
+})
+
+auth0Client = new Vue({
+    el: "#auth0Client",
     data: {
         config: {}
     },
@@ -105,3 +128,5 @@ auth0Client = new Vue({
         validateWithDroplit: function () { },
     }
 })
+
+
