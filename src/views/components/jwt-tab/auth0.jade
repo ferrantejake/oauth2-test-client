@@ -4,34 +4,44 @@
     .container
       .col
         .form-group.row
-          label(for='id_token').col-4.text-right id token
+          label(for='auth0_domain').col-4.text-right Domain
           .col
-            textarea(v-model='config.id_token', name='id_token').form-control
+            input(v-model='config.auth0_domain', name='auth0_domain' @input='onConfigChange').form-control
         .form-group.row
-          label(for='access_token').col-4.text-right access token
+          label(for='auth0_client_id').col-4.text-right Client Id
           .col
-            textarea(v-model='config.access_token', name='access_token').form-control
+            input(v-model='config.auth0_client_id', name='auth0_client_id' @input='onConfigChange').form-control
   .row
     .container
       p
-        button(@click='clearConfig' type='button').btn.btn-secondary Clear Configuration 
+        button(@click='clear' type='button').btn.btn-secondary Clear Configuration 
       p
-        button(@click='retrieveTokens' type='button').btn.btn-warning Retrieve JWT tokens
+        button(@click='login' type='button').btn.btn-warning Login with Auth0
   h5 2. Validate ID Token
   p Tokens will populate below
   .row
     .container
       .col
         .form-group.row
-          label(for='jwt_validation_endpoint').col-4.text-right JWT verification endpoint
+          label(for='jwt_validation_endpoint').col-4.text-right JWT validation endpoint
           .col 
-            input(v-model='config.jwt_validation_endpoint', name='jwt_validation_endpoint', placeholder='http://dev-ioe.droplit.io/api/ecosystems/:id/conduits/:conduitName/verify-jwt').form-control
+            input(v-model='config.jwt_validation_endpoint', name='jwt_validation_endpoint', placeholder='https://dev-ioe.droplit.io/api/ecosystems/:id/conduits/:conduitName/verify-jwt' @input='onConfigChange').form-control
         .form-group.row
-          label(for='id_token').col-4.text-right id token
-          textarea(v-model='config.id_token', name='id_token').col
+          label(for='authorization_header').col-4.text-right Authorization
+          .col 
+            input(v-model='config.authorization_header', name='authorization_header', placeholder='droplit token' @input='onConfigChange').form-control
         .form-group.row
-          label(for='access_token').col-4.text-right access token
-          textarea(v-model='config.access_token', name='access_token').col
+          label(for='id_token').col-4.text-right ID Token
+          .col
+            textarea(v-model='config.id_token', name='id_token' disabled='disabled').form-control
+        .form-group.row
+          label(for='access_token').col-4.text-right Access Token
+          .col
+            textarea(v-model='config.access_token', name='access_token' disabled='disabled').form-control
+        .form-group.row
+          label(for='expires_in').col-4.text-right Expires In
+          .col
+            span(name='expires_in') {{ config.expires_in }}
   .row
     .container
       p
