@@ -6,11 +6,15 @@
         .form-group.row
           label(for='auth0_domain').col-4.text-right Domain
           .col
-            input(v-model='config.auth0_domain', name='auth0_domain' @input='onConfigChange').form-control
+            input(v-model='config.auth0_domain', name='auth0_domain' @input='onConfigChange' placeholder='company.auth0.com').form-control
         .form-group.row
           label(for='auth0_client_id').col-4.text-right Client Id
           .col
-            input(v-model='config.auth0_client_id', name='auth0_client_id' @input='onConfigChange').form-control
+            input(v-model='config.auth0_client_id', name='auth0_client_id' @input='onConfigChange' placeholder="Single Page App clientId").form-control
+        .form-group.row
+          label(for='auth0_audience').col-4.text-right Audience
+          .col
+            input(v-model='config.auth0_audience', name='auth0_audience' @input='onConfigChange' placeholder="Auth0 API audience (check Droplit configuration)").form-control
   .row
     .container
       p
@@ -30,10 +34,10 @@
           label(for='authorization_header').col-4.text-right Authorization
           .col 
             input(v-model='config.authorization_header', name='authorization_header', placeholder='droplit token' @input='onConfigChange').form-control
-        .form-group.row
-          label(for='id_token').col-4.text-right ID Token
-          .col
-            textarea(v-model='config.id_token', name='id_token' disabled='disabled').form-control
+        //- .form-group.row
+        //-   label(for='id_token').col-4.text-right ID Token
+        //-   .col
+        //-     textarea(v-model='config.id_token', name='id_token' disabled='disabled').form-control
         .form-group.row
           label(for='access_token').col-4.text-right Access Token
           .col

@@ -1,14 +1,8 @@
+// More on this process here: 
+// https://auth0.com/docs/api/authentication#implicit-grant
+
 
 let oauthClient, jwtClient, scopeComponent;
-
-// scopeComponent = new Vue({
-//     data: {},
-//     mounted: function () {
-//         console.log('new scope mounted')
-//     },
-//     template: 'label(for='scopes').col-4.text-right scopes \
-//     input(v-model='config.scopes', name='scopes').col'
-// })
 
 const { pathname, host, protocol } = window.location;
 const callback_endpoint = protocol + '//' + host + pathname + 'callback'
@@ -96,7 +90,9 @@ class Mutex {
 jwtClient = {
     data: {
         client: '',
-        config: {},
+        config: {
+            response_type: 'token' // get access tokenb
+        },
         // inputTimeout: Date,
         // hasDebounced: () => boolean,
         // mutex: Mutex
@@ -158,7 +154,7 @@ jwtClient = {
             const droplitClient = axios.create(options);
             const body = {
                 accessToken: this.config.access_token,
-                idToken: this.config.id_token,
+                // idToken: this.config.id_token,
             };
 
             droplitClient
@@ -268,9 +264,11 @@ auth0Client = new Vue({
     created: function () {
         const auth0_domain = localStorage.getItem('auth0_domain');
         const auth0_client_id = localStorage.getItem('auth0_client_id');
+        const auth0_audience = localStorage.getItem('auth0_audience');
 
         this.config.auth0_domain = auth0_domain;
         this.config.auth0_client_id = auth0_client_id;
+        this.config.auth0_audience = auth0_audience;
     },
     methods: {
         clear: function () {
@@ -291,7 +289,10 @@ auth0Client = new Vue({
             const searchparams = {
                 response_type: 'token',
                 client_id: this.config.auth0_client_id,
-                redirect_uri: callback_endpoint
+                redirect_uri: callback_endpoint,
+                audience: this.config.auth0_audience,
+                // scope: this.config.scope,
+                response_type: this.config.response_type,
             };
 
             const searchkeys = Object.keys(searchparams);
@@ -301,6 +302,8 @@ auth0Client = new Vue({
                     return `${acc}?${key}=${val}`;
                 return `${acc}&${key}=${val}`;
             }, authorizeEndpoint);
+
+            // console.log(authorizeEndpoint)
 
             window.location.href = authorizeEndpoint;
         }
