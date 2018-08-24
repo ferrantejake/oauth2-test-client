@@ -14,6 +14,7 @@ if (hash.length > 0) {
 
 const query = window.getQueryParameters(searchString);
 
+const state = query.state;
 const access_token = query.access_token;
 // const id_token = query.id_token;
 const expires_in = query.expires_in;
@@ -23,9 +24,9 @@ if (!access_token) {
     window.location.pathname = '/error'
 }
 
-localStorage.setItem('access_token', access_token)
+localStorage.setItem(`${state}_access_token`, access_token)
 // localStorage.setItem('id_token', id_token)
-localStorage.setItem('expires_in', expires_in)
+localStorage.setItem(`${state}_expires_in`, expires_in)
 
 console.log('success')
 setTimeout(() => {

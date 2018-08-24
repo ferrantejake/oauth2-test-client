@@ -99,19 +99,6 @@ jwtClient = {
         // retryCount: number
     },
     created: function () {
-        const id_token = localStorage.getItem('id_token');
-        const access_token = localStorage.getItem('access_token');
-        const expires_in = localStorage.getItem('expires_in');
-
-        this.config.id_token = id_token;
-        this.config.access_token = access_token;
-        this.config.expires_in = expires_in;
-
-        const authorization_header = localStorage.getItem('authorization_header');
-        this.config.authorization_header = authorization_header;
-        const jwt_validation_endpoint = localStorage.getItem('jwt_validation_endpoint');
-        this.config.jwt_validation_endpoint = jwt_validation_endpoint;
-
         this.inputTimeout = new Date();
         this.hasDebounced = () => this.inputTimeout.getTime() < (new Date().getTime() - 100);
         this.mutex = new Mutex(this.hasDebounced);
@@ -120,12 +107,8 @@ jwtClient = {
     methods: {
         clearTokens: function () {
             const items = [
-                // `${this.client}_access_token`,
-                // `${this.client}_id_token`,
-                // `${this.client}_expires_in`
-                `access_token`,
-                `id_token`,
-                `expires_in`
+                `${this.client}_access_token`,
+                `${this.client}_expires_in`
             ];
 
             items.forEach(i => {
@@ -137,66 +120,29 @@ jwtClient = {
             vm.$forceUpdate();
         },
         validateWithDroplit: function () {
-            if (!this.config.jwt_validation_endpoint) {
+            if (!this.config[`${this.client}_jwt_validation_endpoint`]) {
                 return alert('validation endpoint required')
             }
-            if (!this.config.authorization_header) {
+            if (!this.config[`${this.client}_authorization_header`]) {
                 return alert('authorization required')
             }
 
             const options = {
                 headers: {
-                    'Authorization': this.config.authorization_header,
+                    'Authorization': this.config[`${this.client}_authorization_header`],
                     'Content-Type': 'application/json'
                 },
                 responseType: 'json'
             }
             const droplitClient = axios.create(options);
             const body = {
-                accessToken: this.config.access_token,
-                // idToken: this.config.id_token,
+                accessToken: this.config[`${this.client}_access_token`],
             };
 
             droplitClient
-                .post(this.config.jwt_validation_endpoint, body)
+                .post(this.config[`${this.client}_jwt_validation_endpoint`], body)
                 .then(console.log)
                 .catch(console.log)
-            // .then(response => (this.info = response))
-
-            // const options = {
-            //     headers: {
-            //         // 'Access-Control-Allow-Origin': '*',
-            //         'Authorization': this.config.authorization_header,
-            //         'Content-Type': 'application/json'
-            //     },
-            //     method: 'POST',
-            //     body: {
-            //         idToken: this.config.id_token,
-            //         accessToken: this.config.access_token,
-            //     },
-            //     // mode: 'no-cors'
-            // }
-            // const requestVerification = new Request(this.config.jwt_validation_endpoint, options);
-
-            // console.log('starting request')
-            // fetch(requestVerification)
-            //     .then(response => {
-            //         if (response.status === 200) {
-            //             return response.json();
-            //         } else {
-            //             console.log(response)
-            //             throw new Error('Something went wrong on api server!');
-            //         }
-            //     })
-            //     .then(json => {
-            //         console.log('json')
-            //         console.log(json)
-            //         // myImage.src = URL.createObjectURL(blob);
-            //     })
-            //     .catch(error => {
-            //         console.log('error')
-            //         console.log(error)
-            //     });
         },
         onConfigChange: function (e) {
             console.log('mutex', this.mutex);
@@ -269,6 +215,18 @@ auth0Client = new Vue({
         this.config.auth0_domain = auth0_domain;
         this.config.auth0_client_id = auth0_client_id;
         this.config.auth0_audience = auth0_audience;
+
+        const auth0_access_token = localStorage.getItem('auth0_access_token');
+        const auth0_expires_in = localStorage.getItem('auth0_expires_in');
+
+        this.config.auth0_access_token = auth0_access_token;
+        this.config.auth0_expires_in = auth0_expires_in;
+
+        const jwt_validation_endpoint = localStorage.getItem(`${this.client}_jwt_validation_endpoint`);
+        this.config[`${this.client}_jwt_validation_endpoint`] = jwt_validation_endpoint;
+
+        const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
+        this.config[`${this.client}_authorization_header`] = authorization_header;
     },
     methods: {
         clear: function () {
@@ -291,7 +249,8 @@ auth0Client = new Vue({
                 client_id: this.config.auth0_client_id,
                 redirect_uri: callback_endpoint,
                 audience: this.config.auth0_audience,
-                // scope: this.config.scope,
+                state: this.client,
+                // scope: // not used here
                 response_type: this.config.response_type,
             };
 
@@ -303,11 +262,77 @@ auth0Client = new Vue({
                 return `${acc}&${key}=${val}`;
             }, authorizeEndpoint);
 
-            // console.log(authorizeEndpoint)
-
             window.location.href = authorizeEndpoint;
         }
     }
 })
 
 
+
+cognitoClient = new Vue({
+    el: '#cognito',
+    mixins: [jwtClient],
+    data: {
+        client: 'cognito',
+        config: {}
+    },
+    created: function () {
+        const cognito_domain = localStorage.getItem('cognito_domain');
+        const cognito_region = localStorage.getItem('cognito_region');
+        const cognito_client_id = localStorage.getItem('cognito_client_id');
+
+        this.config.cognito_domain = cognito_domain;
+        this.config.cognito_region = cognito_region;
+        this.config.cognito_client_id = cognito_client_id;
+        this.config.cognito_scope = 'aws.cognito.signin.user.admin';
+
+        const cognito_access_token = localStorage.getItem('cognito_access_token');
+        const cognito_expires_in = localStorage.getItem('cognito_expires_in');
+
+        this.config.cognito_access_token = cognito_access_token;
+        this.config.cognito_expires_in = cognito_expires_in;
+
+        const jwt_validation_endpoint = localStorage.getItem(`${this.client}_jwt_validation_endpoint`);
+        this.config[`${this.client}_jwt_validation_endpoint`] = jwt_validation_endpoint;
+
+        const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
+        this.config[`${this.client}_authorization_header`] = authorization_header;
+    },
+    methods: {
+        clear: function () {
+
+            Object.keys(this.config).forEach(key => {
+                localStorage.removeItem(key)
+                console.log('clearing', key)
+            })
+            this.config = {};
+        },
+        login: function () {
+
+            if (!this.config.cognito_domain || !this.config.cognito_region || !this.config.cognito_client_id)
+                return alert('Domain, region, and clientId requried')
+
+            let authorizeEndpoint = `https://${this.config.cognito_domain}.auth.${this.config.cognito_region}.amazoncognito.com/oauth2/authorize`
+
+            const searchparams = {
+                response_type: 'token',
+                client_id: this.config.cognito_client_id,
+                redirect_uri: callback_endpoint,
+                state: this.client,
+                scope: this.config.cognito_scope
+            };
+
+            const searchkeys = Object.keys(searchparams);
+            authorizeEndpoint = searchkeys.reduce((acc, key, index) => {
+                const val = searchparams[key];
+                if (index === 0)
+                    return `${acc}?${key}=${val}`;
+                return `${acc}&${key}=${val}`;
+            }, authorizeEndpoint);
+
+            console.log(authorizeEndpoint)
+
+            window.location.href = authorizeEndpoint;
+        }
+    }
+})

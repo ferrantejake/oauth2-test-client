@@ -2,6 +2,8 @@ ul#jwtTabs.nav.nav-tabs(role='tablist')
   li.nav-item
     a#auth0-tab.nav-link.active(data-toggle='tab', href='#auth0', role='tab', aria-controls='auth0', aria-selected='true') Auth0
   li.nav-item
+    a#cognito-tab.nav-link(data-toggle='tab', href='#cognito', role='tab', aria-controls='cognito', aria-selected='false') Cognito
+  li.nav-item
     a#okta-tab.nav-link(data-toggle='tab', href='#okta', role='tab', aria-controls='okta', aria-selected='false') Okta
   //- li.nav-item
   //-   a#home-tab.nav-link(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='false') Home
@@ -12,6 +14,7 @@ ul#jwtTabs.nav.nav-tabs(role='tablist')
 #jwtTabContent.tab-content
   //- include ./jwt-tabs/droplit
   include ./jwt-tab/auth0
+  include ./jwt-tab/cognito
   include ./jwt-tab/okta
   //- #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab') HOME
   //- #profile.tab-pane.fade(role='tabpanel', aria-labelledby='profile-tab') PROFILE

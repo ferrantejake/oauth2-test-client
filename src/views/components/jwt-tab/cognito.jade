@@ -1,0 +1,54 @@
+#cognito.tab-pane.fade(role='tabpanel', aria-labelledby='cognito-tab')
+  h5 1. Retrieve JWT tokens
+  .row
+    .container
+      .col
+        .form-group.row
+          label(for='cognito_domain').col-4.text-right Domain
+          .col
+            input(v-model='config.cognito_domain', name='cognito_domain' @input='onConfigChange' placeholder='mycompany').form-control
+        .form-group.row
+          label(for='cognito_region').col-4.text-right Region
+          .col
+            input(v-model='config.cognito_region', name='cognito_region' @input='onConfigChange' placeholder='us-east-1').form-control
+        .form-group.row
+          label(for='cognito_client_id').col-4.text-right Client Id
+          .col
+            input(v-model='config.cognito_client_id', name='cognito_client_id' @input='onConfigChange' placeholder="User pool clientId").form-control
+        .form-group.row
+          label(for='cognito_scope').col-4.text-right Scope
+          .col
+            span(name='cognito_scope') {{ config.cognito_scope }}
+  .row
+    .container
+      p
+        button(@click='clear' type='button').btn.btn-secondary Clear Configuration 
+      p
+        button(@click='login' type='button').btn.btn-warning Login with Cognito
+  h5 2. Validate ID Token
+  p Tokens will populate below
+  .row
+    .container
+      .col
+        .form-group.row
+          label(for='cognito_jwt_validation_endpoint').col-4.text-right JWT validation endpoint
+          .col 
+            input(v-model='config.cognito_jwt_validation_endpoint', name='cognito_jwt_validation_endpoint', placeholder='https://dev-ioe.droplit.io/api/ecosystems/:id/conduits/:conduitName/verify-jwt' @input='onConfigChange').form-control
+        .form-group.row
+          label(for='cognito_authorization_header').col-4.text-right Authorization
+          .col 
+            input(v-model='config.cognito_authorization_header', name='cognito_authorization_header', placeholder='droplit token' @input='onConfigChange').form-control
+        .form-group.row
+          label(for='cognito_access_token').col-4.text-right Access Token
+          .col
+            textarea(v-model='config.cognito_access_token', name='cognito_access_token' disabled='disabled').form-control
+        .form-group.row
+          label(for='cognito_expires_in').col-4.text-right Expires In
+          .col
+            span(name='cognito_expires_in') {{ config.cognito_expires_in }}
+  .row
+    .container
+      p
+        button(@click='clearTokens' type='button').btn.btn-secondary Clear Tokens
+      p
+        button(@click='validateWithDroplit' type='button').btn.btn-success Validate ID Token with Droplit
