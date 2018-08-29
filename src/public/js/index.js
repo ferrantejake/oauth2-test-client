@@ -336,3 +336,77 @@ cognitoClient = new Vue({
         }
     }
 })
+
+
+
+oktaClient = new Vue({
+    el: '#okta',
+    mixins: [jwtClient],
+    data: {
+        client: 'okta',
+        config: {}
+    },
+    created: function () {
+        const okta_issuer_uri = localStorage.getItem('okta_issuer_uri');
+        // const authorization_server = localStorage.getItem(`${this.client}_authorization_server`);
+        const okta_client_id = localStorage.getItem('okta_client_id');
+
+        this.config.okta_issuer_uri = okta_issuer_uri;
+        // this.config[`${this.client}_authorization_server`] = authorization_server;
+        this.config.okta_client_id = okta_client_id;
+        this.config.okta_scope = 'openid';
+
+        const okta_access_token = localStorage.getItem('okta_access_token');
+        const okta_expires_in = localStorage.getItem('okta_expires_in');
+
+        this.config.okta_access_token = okta_access_token;
+        this.config.okta_expires_in = okta_expires_in;
+
+        const jwt_validation_endpoint = localStorage.getItem(`${this.client}_jwt_validation_endpoint`);
+        this.config[`${this.client}_jwt_validation_endpoint`] = jwt_validation_endpoint;
+
+        const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
+        this.config[`${this.client}_authorization_header`] = authorization_header;
+    },
+    methods: {
+        clear: function () {
+
+            Object.keys(this.config).forEach(key => {
+                localStorage.removeItem(key)
+                console.log('clearing', key)
+            })
+            this.config = {};
+        },
+        login: function () {
+            // reference: https://developer.okta.com/docs/api/resources/oidc#request-parameters
+
+
+            if (!this.config.okta_issuer_uri || !this.config.okta_client_id) {
+                return alert('Domain, region, and clientId requried')
+            }
+
+            let authorizeEndpoint = `${this.config.okta_issuer_uri}/v1/authorize`
+
+            const searchparams = {
+                response_type: 'token',
+                client_id: this.config.okta_client_id,
+                redirect_uri: callback_endpoint,
+                state: this.client,
+                scope: this.config.okta_scope,
+                nonce: new Date().getTime(), // fake nonce
+            };
+
+            const searchkeys = Object.keys(searchparams);
+            authorizeEndpoint = searchkeys.reduce((acc, key, index) => {
+                const val = searchparams[key];
+                if (index === 0)
+                    return `${acc}?${key}=${val}`;
+                return `${acc}&${key}=${val}`;
+            }, authorizeEndpoint);
+
+            console.log(authorizeEndpoint)
+
+            window.location.href = authorizeEndpoint;
+        }
+    }
+})

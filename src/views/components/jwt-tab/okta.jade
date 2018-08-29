@@ -4,35 +4,48 @@
     .container
       .col
         .form-group.row
-          label(for='jwt_validation_endpoint').col-4.text-right JWT verification endpoint
-          .col 
-            input(v-model='config.jwt_validation_endpoint', name='jwt_validation_endpoint').form-control
-        .form-group.row
-          label(for='id_token').col-4.text-right id token
+          label(for='okta_issuer_uri').col-4.text-right Issuer URI
           .col
-            textarea(v-model='config.id_token', name='id_token').form-control
+            input(v-model='config.okta_issuer_uri', name='okta_issuer_uri' @input='onConfigChange' placeholder='myOktaCompany').form-control
+        //- .form-group.row
+        //-   label(for='okta_authorization_server').col-4.text-right Authorization Server
+        //-   .col
+        //-     input(v-model='config.okta_authorization_server', name='okta_authorization_server' @input='onConfigChange' placeholder='default').form-control
         .form-group.row
-          label(for='access_token').col-4.text-right access token
+          label(for='okta_client_id').col-4.text-right Application Client Id
           .col
-            textarea(v-model='config.access_token', name='access_token').form-control
+            input(v-model='config.okta_client_id', name='okta_client_id' @input='onConfigChange' placeholder="Applicaiton clientId").form-control
+        .form-group.row
+          label(for='okta_scope').col-4.text-right Scope
+          .col
+            span(name='okta_scope') {{ config.okta_scope }}
   .row
     .container
       p
-        button(@click='clearConfig' type='button').btn.btn-secondary Clear Configuration 
+        button(@click='clear' type='button').btn.btn-secondary Clear Configuration 
       p
-        button(@click='retrieveTokens' type='button').btn.btn-warning Retrieve JWT tokens
-  
+        button(@click='login' type='button').btn.btn-warning Login with Okta
   h5 2. Validate ID Token
   p Tokens will populate below
   .row
     .container
       .col
         .form-group.row
-          label(for='id_token').col-4.text-right id token
-          textarea(v-model='config.id_token', name='id_token').col
+          label(for='okta_jwt_validation_endpoint').col-4.text-right JWT validation endpoint
+          .col 
+            input(v-model='config.okta_jwt_validation_endpoint', name='okta_jwt_validation_endpoint', placeholder='https://dev-ioe.droplit.io/api/ecosystems/:id/conduits/:conduitName/verify-jwt' @input='onConfigChange').form-control
         .form-group.row
-          label(for='access_token').col-4.text-right access token
-          textarea(v-model='config.access_token', name='access_token').col
+          label(for='okta_authorization_header').col-4.text-right Authorization
+          .col 
+            input(v-model='config.okta_authorization_header', name='okta_authorization_header', placeholder='droplit token' @input='onConfigChange').form-control
+        .form-group.row
+          label(for='okta_access_token').col-4.text-right Access Token
+          .col
+            textarea(v-model='config.okta_access_token', name='okta_access_token' disabled='disabled').form-control
+        .form-group.row
+          label(for='okta_expires_in').col-4.text-right Expires In
+          .col
+            span(name='okta_expires_in') {{ config.okta_expires_in }}
   .row
     .container
       p
