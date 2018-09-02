@@ -123,13 +123,13 @@ jwtClient = {
             if (!this.config[`${this.client}_jwt_validation_endpoint`]) {
                 return alert('validation endpoint required')
             }
-            if (!this.config[`${this.client}_authorization_header`]) {
-                return alert('authorization required')
-            }
+            // if (!this.config[`${this.client}_authorization_header`]) {
+            //     return alert('authorization required')
+            // }
 
             const options = {
                 headers: {
-                    'Authorization': this.config[`${this.client}_authorization_header`],
+                    // 'Authorization': this.config[`${this.client}_authorization_header`],
                     'Content-Type': 'application/json'
                 },
                 responseType: 'json'
@@ -137,6 +137,8 @@ jwtClient = {
             const droplitClient = axios.create(options);
             const body = {
                 accessToken: this.config[`${this.client}_access_token`],
+                idToken: '<anything can go here>',
+                ttl: 3600
             };
 
             droplitClient
@@ -225,8 +227,8 @@ auth0Client = new Vue({
         const jwt_validation_endpoint = localStorage.getItem(`${this.client}_jwt_validation_endpoint`);
         this.config[`${this.client}_jwt_validation_endpoint`] = jwt_validation_endpoint;
 
-        const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
-        this.config[`${this.client}_authorization_header`] = authorization_header;
+        // const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
+        // this.config[`${this.client}_authorization_header`] = authorization_header;
     },
     methods: {
         clear: function () {
@@ -250,7 +252,7 @@ auth0Client = new Vue({
                 redirect_uri: callback_endpoint,
                 audience: this.config.auth0_audience,
                 state: this.client,
-                // scope: // not used here
+                scope: 'openid', // https://auth0.com/docs/api/authentication?shell#get-user-info
                 response_type: this.config.response_type,
             };
 
@@ -295,8 +297,8 @@ cognitoClient = new Vue({
         const jwt_validation_endpoint = localStorage.getItem(`${this.client}_jwt_validation_endpoint`);
         this.config[`${this.client}_jwt_validation_endpoint`] = jwt_validation_endpoint;
 
-        const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
-        this.config[`${this.client}_authorization_header`] = authorization_header;
+        // const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
+        // this.config[`${this.client}_authorization_header`] = authorization_header;
     },
     methods: {
         clear: function () {
@@ -365,8 +367,8 @@ oktaClient = new Vue({
         const jwt_validation_endpoint = localStorage.getItem(`${this.client}_jwt_validation_endpoint`);
         this.config[`${this.client}_jwt_validation_endpoint`] = jwt_validation_endpoint;
 
-        const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
-        this.config[`${this.client}_authorization_header`] = authorization_header;
+        // const authorization_header = localStorage.getItem(`${this.client}_authorization_header`);
+        // this.config[`${this.client}_authorization_header`] = authorization_header;
     },
     methods: {
         clear: function () {

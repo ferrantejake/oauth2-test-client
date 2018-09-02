@@ -30,10 +30,10 @@
           label(for='auth0_jwt_validation_endpoint').col-4.text-right JWT validation endpoint
           .col 
             input(v-model='config.auth0_jwt_validation_endpoint', name='auth0_jwt_validation_endpoint', placeholder='https://dev-ioe.droplit.io/api/ecosystems/:id/conduits/:conduitName/verify-jwt' @input='onConfigChange').form-control
-        .form-group.row
-          label(for='auth0_authorization_header').col-4.text-right Authorization
-          .col 
-            input(v-model='config.auth0_authorization_header', name='auth0_authorization_header', placeholder='droplit token' @input='onConfigChange').form-control
+        //- .form-group.row
+        //-   label(for='auth0_authorization_header').col-4.text-right Authorization
+        //-   .col 
+        //-     input(v-model='config.auth0_authorization_header', name='auth0_authorization_header', placeholder='droplit token' @input='onConfigChange').form-control
         //- .form-group.row
         //-   label(for='id_token').col-4.text-right ID Token
         //-   .col
