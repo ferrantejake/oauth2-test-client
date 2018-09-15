@@ -350,10 +350,12 @@ oktaClient = new Vue({
     },
     created: function () {
         const okta_issuer_uri = localStorage.getItem('okta_issuer_uri');
+        const okta_authorization_server = localStorage.getItem('okta_authorization_server');
         // const authorization_server = localStorage.getItem(`${this.client}_authorization_server`);
         const okta_client_id = localStorage.getItem('okta_client_id');
 
         this.config.okta_issuer_uri = okta_issuer_uri;
+        this.config.okta_authorization_server = okta_authorization_server;
         // this.config[`${this.client}_authorization_server`] = authorization_server;
         this.config.okta_client_id = okta_client_id;
         this.config.okta_scope = 'openid';
@@ -387,7 +389,7 @@ oktaClient = new Vue({
                 return alert('Domain, region, and clientId requried')
             }
 
-            let authorizeEndpoint = `${this.config.okta_issuer_uri}/v1/authorize`
+            let authorizeEndpoint = `https://${this.config.okta_issuer_uri}/oauth2/${this.config.okta_authorization_server}/v1/authorize`
 
             const searchparams = {
                 response_type: 'token',

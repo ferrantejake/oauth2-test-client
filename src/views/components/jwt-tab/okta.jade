@@ -7,10 +7,10 @@
           label(for='okta_issuer_uri').col-4.text-right Issuer URI
           .col
             input(v-model='config.okta_issuer_uri', name='okta_issuer_uri' @input='onConfigChange' placeholder='myOktaCompany').form-control
-        //- .form-group.row
-        //-   label(for='okta_authorization_server').col-4.text-right Authorization Server
-        //-   .col
-        //-     input(v-model='config.okta_authorization_server', name='okta_authorization_server' @input='onConfigChange' placeholder='default').form-control
+        .form-group.row
+          label(for='okta_authorization_server').col-4.text-right Authorization Server
+          .col
+            input(v-model='config.okta_authorization_server', name='okta_authorization_server' @input='onConfigChange' placeholder='default').form-control
         .form-group.row
           label(for='okta_client_id').col-4.text-right Application Client Id
           .col
